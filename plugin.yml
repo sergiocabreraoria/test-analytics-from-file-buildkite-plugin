@@ -1,0 +1,21 @@
+name: Test Analytics From File
+description:
+  Send tests results to Buildkite Test Analytics and create a shourcut as
+  annotation
+author: https://github.com/sergiocabreraoria
+requirements: []
+configuration:
+  properties:
+    test_results_path:
+      type: string
+    test_results_format:
+      type: string
+    test_run_link:
+      type: boolean
+    annotation_context:
+      type: string
+    annotation_style:
+      type: string
+    annotation_append:
+      type: boolean
+  additionalProperties: false
