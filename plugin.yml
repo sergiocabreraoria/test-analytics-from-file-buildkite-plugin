@@ -6,12 +6,20 @@ author: https://github.com/sergiocabreraoria
 requirements: []
 configuration:
   properties:
-    test_results_path:
+    api_token_env_name:
       type: string
-    test_results_format:
+    test_results_file_path:
+      type: string
+    test_results_file_format:
+      type: string
+    test_analytics_key:
       type: string
     test_run_link:
       type: boolean
+    build_url:
+      type: string
+    build_number:
+      type: string
     annotation_context:
       type: string
     annotation_style:
