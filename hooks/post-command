@@ -75,6 +75,10 @@ fi
 
 if [[ -n "$TEST_RESULTS_PATH" ]]; then
   echo "'$TEST_RESULTS_PATH' not received"
+  ls
+  cd ./results
+  echo "--------------------------------"
+  ls
   exit 1
 fi
 
