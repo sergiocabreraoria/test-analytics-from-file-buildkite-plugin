@@ -60,11 +60,15 @@ bk_annotate_test_analytic_link(){
   test_analytics_run_url=$(echo "$1" | grep -o '"run_url": *"[^"]*"' | cut -d'"' -f4)
   echo "Test Analytic url: ${test_analytics_run_url}"
 
+
   ANNOTATION="
 <p>See <a href=\"$test_analytics_run_url\">the global test run</a> for more information.</p>
 <p>The test run includes results from <a href=\"$BUILD_URL\">global run job</a></p>
 "
-  buildkite-agent annotate "$ANNOTATION" --style "$ANNOTATION_STYLE" --context "$ANNOTATION_CONTEXT" $ANNOTATION_APPEND_FLAG
+  export test_analytics_run_url="hola"; [[ -z "$test_analytics_run_url" ]] && echo "yes" || echo "no"
+  if [[ ! -z "$test_analytics_run_url" ]]; then
+    buildkite-agent annotate "$ANNOTATION" --style "$ANNOTATION_STYLE" --context "$ANNOTATION_CONTEXT" $ANNOTATION_APPEND_FLAG
+  fi
 }
 
 
