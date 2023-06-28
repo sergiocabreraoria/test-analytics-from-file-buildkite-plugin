@@ -56,8 +56,9 @@ echo "BUILDKITE_PLUGIN_TEST_ANALYTICS_FROM_FILE_ANNOTATION_APPEND: $BUILDKITE_PL
 
 
 bk_annotate_test_analytic_link(){
+  buildkite_test_analytics_res=$1
   echo "--- :spiral_note_pad: Annotate Test Analytics link"
-  test_analytics_run_url=$(echo "$1" | grep -o '"run_url": *"[^"]*"' | cut -d'"' -f4)
+  test_analytics_run_url=$(echo "$buildkite_test_analytics_res" | grep -o '"run_url": *"[^"]*"' | cut -d'"' -f4)
   echo "Test Analytic url: ${test_analytics_run_url}"
 
 
@@ -65,9 +66,11 @@ bk_annotate_test_analytic_link(){
 <p>See <a href=\"$test_analytics_run_url\">the global test run</a> for more information.</p>
 <p>The test run includes results from <a href=\"$BUILD_URL\">global run job</a></p>
 "
-  export test_analytics_run_url="hola"; [[ -z "$test_analytics_run_url" ]] && echo "yes" || echo "no"
+
   if [[ ! -z "$test_analytics_run_url" ]]; then
     buildkite-agent annotate "$ANNOTATION" --style "$ANNOTATION_STYLE" --context "$ANNOTATION_CONTEXT" $ANNOTATION_APPEND_FLAG
+  else
+    echo ":warning: $buildkite_test_analytics_res
   fi
 }
 
