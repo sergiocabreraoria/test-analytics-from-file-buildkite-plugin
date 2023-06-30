@@ -70,7 +70,7 @@ bk_annotate_test_analytic_link(){
   if [[ ! -z "$test_analytics_run_url" ]]; then
     buildkite-agent annotate "$ANNOTATION" --style "$ANNOTATION_STYLE" --context "$ANNOTATION_CONTEXT" $ANNOTATION_APPEND_FLAG
   else
-    echo ":warning: $buildkite_test_analytics_res
+    echo ":warning: $buildkite_test_analytics_res"
   fi
 }
 
