@@ -89,6 +89,11 @@ if [[ ! -n "$TEST_RESULTS_PATH" ]]; then
   exit 1
 fi
 
+if [[ "$(grep -q 'tests="0"' "${TEST_RESULTS_PATH}")" == 0 ]]; then
+  echo "No tests found, won't send results to Buildkite Test Analytics"
+  exit 0
+fi
+
 if [[ ! "$TEST_RESULTS_FORMAT" =~ ^(json|junit)$ ]]; then
   echo "'$TEST_RESULTS_FORMAT' is a non valid format <json | junit>."
   exit 1
@@ -99,6 +104,13 @@ if [[ ! $TEST_RUN_LINK =~ ^(true|false)$ ]]; then
   exit 1
 fi
 
+
+# Change exit code if no tests were found to prevent Buildkite step retries
+if [[ ! -f "${result_file}" ]] || [[ "$(grep -q 'tests="0"' "${result_file}")" == 0 ]]; then
+  echo "No tests found, changing exit code to prevent buildkite step retries"
+  exit 5
+
+fi
 test_analytics_response=$(curl -X POST \
   -H "Authorization: Token token=\"${TEST_ANALYTICS_TOKEN_VALUE}\"" \
   -F "data=@$TEST_RESULTS_PATH" \
